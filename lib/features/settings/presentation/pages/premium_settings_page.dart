@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'dart:ui';
+import '../../../../core/theme/theme_provider.dart';
 
 class PremiumSettingsPage extends StatefulWidget {
   const PremiumSettingsPage({super.key});
@@ -13,7 +15,6 @@ class _PremiumSettingsPageState extends State<PremiumSettingsPage>
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
   bool _isCelsius = true;
-  bool _isDarkMode = false;
   bool _notificationsEnabled = true;
 
   @override
@@ -77,17 +78,21 @@ class _PremiumSettingsPageState extends State<PremiumSettingsPage>
                               ),
                               color: Colors.orange,
                             ),
-                            _buildSettingTile(
-                              icon: Icons.dark_mode,
-                              title: 'Dark Mode',
-                              subtitle: _isDarkMode ? 'Enabled' : 'Disabled',
-                              trailing: Switch(
-                                value: _isDarkMode,
-                                onChanged: (value) {
-                                  setState(() => _isDarkMode = value);
-                                },
-                              ),
-                              color: Colors.indigo,
+                            Consumer<ThemeProvider>(
+                              builder: (context, themeProvider, child) {
+                                return _buildSettingTile(
+                                  icon: Icons.dark_mode,
+                                  title: 'Dark Mode',
+                                  subtitle: themeProvider.isDarkMode ? 'Enabled' : 'Disabled',
+                                  trailing: Switch(
+                                    value: themeProvider.isDarkMode,
+                                    onChanged: (value) {
+                                      themeProvider.toggleTheme();
+                                    },
+                                  ),
+                                  color: Colors.indigo,
+                                );
+                              },
                             ),
                             _buildSettingTile(
                               icon: Icons.notifications,
@@ -117,7 +122,7 @@ class _PremiumSettingsPageState extends State<PremiumSettingsPage>
                             _buildInfoTile(
                               icon: Icons.code,
                               title: 'Developer',
-                              value: 'WeatherMate Team',
+                              value: 'Hasara Sesadi',
                               color: Colors.teal,
                             ),
                             _buildInfoTile(
@@ -192,7 +197,7 @@ class _PremiumSettingsPageState extends State<PremiumSettingsPage>
             ),
           ),
           const SizedBox(width: 16),
-          const Expanded(
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -202,13 +207,18 @@ class _PremiumSettingsPageState extends State<PremiumSettingsPage>
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                     letterSpacing: 0.5,
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.white
+                        : Colors.black,
                   ),
                 ),
                 Text(
                   'Customize your experience',
                   style: TextStyle(
                     fontSize: 14,
-                    color: Colors.grey,
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.grey[400]
+                        : Colors.grey[600],
                   ),
                 ),
               ],
@@ -255,10 +265,13 @@ class _PremiumSettingsPageState extends State<PremiumSettingsPage>
                 const SizedBox(width: 8),
                 Text(
                   title,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     letterSpacing: 0.5,
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.white
+                        : Colors.black,
                   ),
                 ),
               ],
@@ -271,10 +284,15 @@ class _PremiumSettingsPageState extends State<PremiumSettingsPage>
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [
-                  Colors.white.withOpacity(0.9),
-                  Colors.white.withOpacity(0.7),
-                ],
+                colors: Theme.of(context).brightness == Brightness.dark
+                    ? [
+                        Colors.grey[850]!.withOpacity(0.9),
+                        Colors.grey[900]!.withOpacity(0.7),
+                      ]
+                    : [
+                        Colors.white.withOpacity(0.9),
+                        Colors.white.withOpacity(0.7),
+                      ],
               ),
               border: Border.all(
                 color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
@@ -331,17 +349,26 @@ class _PremiumSettingsPageState extends State<PremiumSettingsPage>
         ),
         title: Text(
           title,
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.w600,
             fontSize: 15,
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.white
+                : Colors.black,
           ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
         subtitle: Text(
           subtitle,
           style: TextStyle(
             fontSize: 13,
-            color: Colors.grey[600],
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.grey[400]
+                : Colors.grey[600],
           ),
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
         ),
         trailing: trailing,
       ),
@@ -375,17 +402,30 @@ class _PremiumSettingsPageState extends State<PremiumSettingsPage>
         ),
         title: Text(
           title,
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.w600,
             fontSize: 15,
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.white
+                : Colors.black,
           ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
-        trailing: Text(
-          value,
-          style: TextStyle(
-            fontSize: 14,
-            color: Colors.grey[700],
-            fontWeight: FontWeight.w500,
+        trailing: SizedBox(
+          width: 120,
+          child: Text(
+            value,
+            style: TextStyle(
+              fontSize: 14,
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.grey[300]
+                  : Colors.grey[700],
+              fontWeight: FontWeight.w500,
+            ),
+            textAlign: TextAlign.right,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       ),
@@ -420,22 +460,33 @@ class _PremiumSettingsPageState extends State<PremiumSettingsPage>
         ),
         title: Text(
           title,
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.w600,
             fontSize: 15,
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.white
+                : Colors.black,
           ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
         subtitle: Text(
           subtitle,
           style: TextStyle(
             fontSize: 13,
-            color: Colors.grey[600],
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.grey[400]
+                : Colors.grey[600],
           ),
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
         ),
         trailing: Icon(
           Icons.arrow_forward_ios,
           size: 16,
-          color: Colors.grey[400],
+          color: Theme.of(context).brightness == Brightness.dark
+              ? Colors.grey[500]
+              : Colors.grey[400],
         ),
         onTap: onTap,
       ),

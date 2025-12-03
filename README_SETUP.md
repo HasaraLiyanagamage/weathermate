@@ -226,7 +226,7 @@ This project is for educational purposes as part of Mobile Application Developme
 
 ---
 
-**Developer:** [Your Name]
-**Student ID:** [Your Student ID]
+**Developer:** Hasara Sesadi
+**Student ID:** E211307
 **Module:** Mobile Application Development
 **Institution:** Kingston University

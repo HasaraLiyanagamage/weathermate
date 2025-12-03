@@ -62,39 +62,42 @@ class PremiumDetailCard extends StatelessWidget {
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
             child: Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(12.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Row(
                     children: [
                       Container(
-                        padding: const EdgeInsets.all(12),
+                        padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
                           color: color.withOpacity(0.15),
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(12),
                         ),
                         child: Icon(
                           icon,
                           color: color,
-                          size: 28,
+                          size: 20,
                         ),
                       ),
-                      const SizedBox(width: 12),
+                      const SizedBox(width: 8),
                       Expanded(
                         child: Text(
                           title,
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 12,
                             fontWeight: FontWeight.w500,
                             color: Colors.grey[600],
-                            letterSpacing: 0.5,
+                            letterSpacing: 0.3,
                           ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 8),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
@@ -108,7 +111,7 @@ class PremiumDetailCard extends StatelessWidget {
                               value.contains('.') ? 1 : 0,
                             ),
                             style: TextStyle(
-                              fontSize: 36,
+                              fontSize: 28,
                               fontWeight: FontWeight.bold,
                               color: color,
                               height: 1,
@@ -118,13 +121,13 @@ class PremiumDetailCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 4),
+                        padding: const EdgeInsets.only(bottom: 2),
                         child: Text(
                           unit,
                           style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: color.withOpacity(0.7),
+                            fontSize: 13,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.grey[700],
                           ),
                         ),
                       ),

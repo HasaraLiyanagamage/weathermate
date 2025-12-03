@@ -1,32 +1,33 @@
 import 'package:flutter/material.dart';
+import 'app_colors.dart';
 
 class AppTheme {
-  // Light Theme Colors
-  static const Color primaryLight = Color(0xFF2196F3);
-  static const Color secondaryLight = Color(0xFF03A9F4);
-  static const Color backgroundLight = Color(0xFFF5F5F5);
-  static const Color surfaceLight = Colors.white;
-  static const Color errorLight = Color(0xFFD32F2F);
+  // Light Theme Colors (Green Palette)
+  static const Color primaryLight = AppColors.primaryGreen;
+  static const Color secondaryLight = AppColors.accentMint;
+  static const Color backgroundLight = AppColors.backgroundLight;
+  static const Color surfaceLight = AppColors.surfaceLight;
+  static const Color errorLight = AppColors.error;
   
-  // Dark Theme Colors
-  static const Color primaryDark = Color(0xFF1976D2);
-  static const Color secondaryDark = Color(0xFF0288D1);
-  static const Color backgroundDark = Color(0xFF121212);
-  static const Color surfaceDark = Color(0xFF1E1E1E);
-  static const Color errorDark = Color(0xFFCF6679);
+  // Dark Theme Colors (Green Palette)
+  static const Color primaryDark = AppColors.primaryDark;
+  static const Color secondaryDark = AppColors.accentTeal;
+  static const Color backgroundDark = AppColors.backgroundDark;
+  static const Color surfaceDark = AppColors.surfaceDark;
+  static const Color errorDark = AppColors.error;
   
-  // Text Colors
-  static const Color textPrimaryLight = Color(0xFF212121);
-  static const Color textSecondaryLight = Color(0xFF757575);
-  static const Color textPrimaryDark = Color(0xFFFFFFFF);
-  static const Color textSecondaryDark = Color(0xFFB0B0B0);
+  // Text Colors (Green Palette)
+  static const Color textPrimaryLight = AppColors.textPrimary;
+  static const Color textSecondaryLight = AppColors.textSecondary;
+  static const Color textPrimaryDark = AppColors.textWhite;
+  static const Color textSecondaryDark = AppColors.textOnGreen;
   
-  // Weather Condition Colors
-  static const Color sunnyColor = Color(0xFFFFB300);
-  static const Color cloudyColor = Color(0xFF90A4AE);
-  static const Color rainyColor = Color(0xFF42A5F5);
-  static const Color snowyColor = Color(0xFFE1F5FE);
-  static const Color stormyColor = Color(0xFF5E35B1);
+  // Weather Condition Colors (Green Palette)
+  static const Color sunnyColor = AppColors.green3;
+  static const Color cloudyColor = AppColors.green5;
+  static const Color rainyColor = AppColors.green6;
+  static const Color snowyColor = AppColors.green2;
+  static const Color stormyColor = AppColors.green7;
   
   // Light Theme
   static ThemeData lightTheme = ThemeData(
@@ -158,24 +159,29 @@ class AppTheme {
     ),
   );
   
-  // Get color based on weather condition
+  // Get color based on weather condition (Green Palette)
   static Color getWeatherColor(String condition) {
     switch (condition.toLowerCase()) {
       case 'clear':
       case 'sunny':
-        return sunnyColor;
+        return sunnyColor; // green3
       case 'clouds':
       case 'cloudy':
-        return cloudyColor;
+        return cloudyColor; // green5
       case 'rain':
       case 'drizzle':
-        return rainyColor;
+        return rainyColor; // green6
       case 'snow':
-        return snowyColor;
+        return snowyColor; // green2
       case 'thunderstorm':
-        return stormyColor;
+        return stormyColor; // green7
       default:
-        return primaryLight;
+        return primaryLight; // green5
     }
+  }
+  
+  // Get gradient based on weather condition
+  static List<Color> getWeatherGradient(String condition, bool isNight) {
+    return AppColors.getWeatherGradient(condition, isNight);
   }
 }

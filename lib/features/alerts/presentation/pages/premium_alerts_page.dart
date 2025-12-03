@@ -82,7 +82,7 @@ class _PremiumAlertsPageState extends State<PremiumAlertsPage>
                   border: Border.all(color: Colors.grey[300]!),
                 ),
                 child: DropdownButtonFormField<String>(
-                  value: selectedType,
+                  initialValue: selectedType,
                   decoration: const InputDecoration(
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.symmetric(horizontal: 16),
@@ -621,7 +621,7 @@ class _PremiumAlertsPageState extends State<PremiumAlertsPage>
                               .read<AlertsProvider>()
                               .toggleAlert(alert.id);
                         },
-                        activeColor: color,
+                        activeThumbColor: color,
                       ),
                       const SizedBox(height: 8),
                       Container(

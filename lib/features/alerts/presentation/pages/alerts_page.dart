@@ -177,7 +177,7 @@ class _AlertsPageState extends State<AlertsPage> {
                 ),
                 const SizedBox(height: 16),
                 DropdownButtonFormField<String>(
-                  value: selectedType,
+                  initialValue: selectedType,
                   decoration: const InputDecoration(
                     labelText: 'Alert Type',
                     border: OutlineInputBorder(),
@@ -197,7 +197,7 @@ class _AlertsPageState extends State<AlertsPage> {
                 const SizedBox(height: 16),
                 if (selectedType != 'rain' && selectedType != 'snow') ...[
                   DropdownButtonFormField<String>(
-                    value: selectedCondition,
+                    initialValue: selectedCondition,
                     decoration: const InputDecoration(
                       labelText: 'Condition',
                       border: OutlineInputBorder(),

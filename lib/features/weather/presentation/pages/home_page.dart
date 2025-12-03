@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _loadDefaultCity() {
-    context.read<WeatherProvider>().getWeatherByCity('London');
+    context.read<WeatherProvider>().getWeatherByCity('Colombo');
   }
 
   void _showLocationServiceDialog() {
@@ -180,23 +180,94 @@ class _HomePageState extends State<HomePage> {
 
         if (weatherProvider.hasError) {
           return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.error_outline, size: 64, color: Colors.red),
-                const SizedBox(height: 16),
-                Text(
-                  weatherProvider.errorMessage ?? 'An error occurred',
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 16),
-                ),
-                const SizedBox(height: 16),
-                ElevatedButton.icon(
-                  onPressed: _loadCurrentLocation,
-                  icon: const Icon(Icons.refresh),
-                  label: const Text('Retry'),
-                ),
-              ],
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: Colors.red.withOpacity(0.1),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.wifi_off,
+                      size: 64,
+                      color: Colors.red,
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  const Text(
+                    'Connection Error',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    weatherProvider.errorMessage ?? 'Unable to load weather data',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.blue.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Troubleshooting Steps:',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        _buildTroubleshootingStep(
+                          '1. Check your internet connection',
+                          Icons.wifi,
+                        ),
+                        _buildTroubleshootingStep(
+                          '2. Make sure WiFi or Mobile Data is enabled',
+                          Icons.signal_cellular_alt,
+                        ),
+                        _buildTroubleshootingStep(
+                          '3. Try switching between WiFi and Mobile Data',
+                          Icons.swap_horiz,
+                        ),
+                        _buildTroubleshootingStep(
+                          '4. Restart your device if problem persists',
+                          Icons.restart_alt,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  ElevatedButton.icon(
+                    onPressed: _loadCurrentLocation,
+                    icon: const Icon(Icons.refresh),
+                    label: const Text('Retry'),
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 32,
+                        vertical: 16,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         }
@@ -381,6 +452,28 @@ class _HomePageState extends State<HomePage> {
       child: Text(
         'Last updated: ${DateFormatter.getRelativeTime(dateTime)}',
         style: Theme.of(context).textTheme.bodySmall,
+      ),
+    );
+  }
+
+  Widget _buildTroubleshootingStep(String text, IconData icon) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6.0),
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            size: 20,
+            color: Theme.of(context).colorScheme.primary,
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              text,
+              style: const TextStyle(fontSize: 14),
+            ),
+          ),
+        ],
       ),
     );
   }

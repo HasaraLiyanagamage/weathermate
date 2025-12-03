@@ -39,6 +39,17 @@ class InjectionContainer {
       BaseOptions(
         connectTimeout: const Duration(seconds: 30),
         receiveTimeout: const Duration(seconds: 30),
+        followRedirects: true,
+        validateStatus: (status) => status! < 500,
+      ),
+    );
+    
+    // Add logging interceptor for debugging
+    _dio.interceptors.add(
+      LogInterceptor(
+        requestBody: true,
+        responseBody: true,
+        error: true,
       ),
     );
 

@@ -415,12 +415,16 @@ class _PremiumForecastPageState extends State<PremiumForecastPage>
                         ),
                       ),
                       const SizedBox(width: 12),
-                      const Text(
-                        'Temperature Trend',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 0.5,
+                      const Expanded(
+                        child: Text(
+                          'Temperature Trend',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 0.5,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ],
@@ -468,10 +472,12 @@ class _PremiumForecastPageState extends State<PremiumForecastPage>
                                     child: Text(
                                       labels[value.toInt()],
                                       style: TextStyle(
-                                        fontSize: 12,
+                                        fontSize: 10,
                                         fontWeight: FontWeight.w600,
                                         color: Colors.grey[700],
                                       ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                   );
                                 }
@@ -573,12 +579,16 @@ class _PremiumForecastPageState extends State<PremiumForecastPage>
               ),
             ),
             const SizedBox(width: 12),
-            const Text(
-              'Daily Forecast',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 0.5,
+            const Expanded(
+              child: Text(
+                'Daily Forecast',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 0.5,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
           ],
@@ -689,6 +699,8 @@ class _PremiumForecastPageState extends State<PremiumForecastPage>
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
                                           ),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
                                         ),
                                         Text(
                                           date,
@@ -696,6 +708,8 @@ class _PremiumForecastPageState extends State<PremiumForecastPage>
                                             fontSize: 12,
                                             color: Colors.grey[600],
                                           ),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
                                         ),
                                         const SizedBox(height: 4),
                                         Text(
@@ -704,24 +718,30 @@ class _PremiumForecastPageState extends State<PremiumForecastPage>
                                             fontSize: 13,
                                             color: Colors.grey[700],
                                           ),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
                                         ),
                                       ],
                                     ),
                                   ),
+                                  const SizedBox(width: 8),
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.end,
+                                    mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Row(
+                                        mainAxisSize: MainAxisSize.min,
                                         children: [
                                           Icon(
                                             Icons.arrow_upward,
-                                            size: 16,
+                                            size: 14,
                                             color: Colors.red[400],
                                           ),
+                                          const SizedBox(width: 2),
                                           Text(
                                             '${maxTemp.round()}°',
                                             style: TextStyle(
-                                              fontSize: 18,
+                                              fontSize: 16,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.red[400],
                                             ),
@@ -730,16 +750,18 @@ class _PremiumForecastPageState extends State<PremiumForecastPage>
                                       ),
                                       const SizedBox(height: 4),
                                       Row(
+                                        mainAxisSize: MainAxisSize.min,
                                         children: [
                                           Icon(
                                             Icons.arrow_downward,
-                                            size: 16,
+                                            size: 14,
                                             color: Colors.blue[400],
                                           ),
+                                          const SizedBox(width: 2),
                                           Text(
                                             '${minTemp.round()}°',
                                             style: TextStyle(
-                                              fontSize: 18,
+                                              fontSize: 16,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.blue[400],
                                             ),
@@ -748,12 +770,13 @@ class _PremiumForecastPageState extends State<PremiumForecastPage>
                                       ),
                                     ],
                                   ),
-                                  const SizedBox(width: 8),
+                                  const SizedBox(width: 4),
                                   Icon(
                                     _expandedIndex == index
                                         ? Icons.keyboard_arrow_up
                                         : Icons.keyboard_arrow_down,
                                     color: Colors.grey[400],
+                                    size: 20,
                                   ),
                                 ],
                               ),

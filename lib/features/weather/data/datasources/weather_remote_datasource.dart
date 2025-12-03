@@ -15,6 +15,9 @@ class WeatherRemoteDataSourceImpl implements WeatherRemoteDataSource {
   @override
   Future<WeatherModel> getCurrentWeather(String cityName) async {
     try {
+      print('🌐 Attempting to fetch weather for: $cityName');
+      print('🔗 URL: ${ApiConstants.baseUrl}${ApiConstants.currentWeather}');
+      
       final response = await dio.get(
         '${ApiConstants.baseUrl}${ApiConstants.currentWeather}',
         queryParameters: {
@@ -23,6 +26,8 @@ class WeatherRemoteDataSourceImpl implements WeatherRemoteDataSource {
           'units': ApiConstants.units,
         },
       );
+      
+      print('✅ Response received: ${response.statusCode}');
 
       if (response.statusCode == 200) {
         return WeatherModel.fromJson(response.data);
@@ -30,12 +35,18 @@ class WeatherRemoteDataSourceImpl implements WeatherRemoteDataSource {
         throw Exception('Failed to load weather data');
       }
     } on DioException catch (e) {
-      if (e.response?.statusCode == 404) {
-        throw Exception('City not found');
+      if (e.type == DioExceptionType.connectionTimeout ||
+          e.type == DioExceptionType.receiveTimeout ||
+          e.type == DioExceptionType.sendTimeout) {
+        throw Exception('Connection timeout. Please check your internet connection and try again.');
+      } else if (e.type == DioExceptionType.connectionError) {
+        throw Exception('No internet connection. Please check your network settings and try again.');
+      } else if (e.response?.statusCode == 404) {
+        throw Exception('City not found. Please check the city name and try again.');
       } else if (e.response?.statusCode == 401) {
-        throw Exception('Invalid API key');
+        throw Exception('Invalid API key. Please contact support.');
       } else {
-        throw Exception('Failed to load weather data: ${e.message}');
+        throw Exception('Network error. Please check your internet connection and try again.');
       }
     } catch (e) {
       throw Exception('Unexpected error: $e');
@@ -62,10 +73,16 @@ class WeatherRemoteDataSourceImpl implements WeatherRemoteDataSource {
         throw Exception('Failed to load weather data');
       }
     } on DioException catch (e) {
-      if (e.response?.statusCode == 401) {
-        throw Exception('Invalid API key');
+      if (e.type == DioExceptionType.connectionTimeout ||
+          e.type == DioExceptionType.receiveTimeout ||
+          e.type == DioExceptionType.sendTimeout) {
+        throw Exception('Connection timeout. Please check your internet connection and try again.');
+      } else if (e.type == DioExceptionType.connectionError) {
+        throw Exception('No internet connection. Please check your network settings and try again.');
+      } else if (e.response?.statusCode == 401) {
+        throw Exception('Invalid API key. Please contact support.');
       } else {
-        throw Exception('Failed to load weather data: ${e.message}');
+        throw Exception('Network error. Please check your internet connection and try again.');
       }
     } catch (e) {
       throw Exception('Unexpected error: $e');
